@@ -1,4 +1,4 @@
-/** @type {import("@ianvs/prettier-plugin-sort-imports").PrettierConfig} */
+/** @type {import("prettier").Config} */
 const config = {
   plugins: [
     'prettier-plugin-astro',

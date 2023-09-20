@@ -1,0 +1,42 @@
+---
+import "@/styles/globals.css"
+import { Dumbbell } from "lucide-react"
+const { title } = Astro.props
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <main class="flex h-screen flex-col items-center px-4 py-4 lg:py-14">
+      <nav
+        class="fixed left-0 top-0 z-10 flex w-full max-w-6xl items-center justify-between border-b border-gray-300 p-4 text-sm animate-in fade-in dark:border-neutral-800 lg:static lg:flex">
+        <div class="flex select-none items-center gap-3">
+          <Dumbbell strokeWidth={2.7} size={32} />
+          <h1 class="text-3xl font-black tracking-widest">FITNESS</h1>
+        </div>
+        <!-- <NavMenu /> -->
+      </nav>
+
+      <div
+        class="mt-12 flex h-full flex-1 flex-wrap place-content-center gap-2 overflow-y-auto overflow-x-hidden text-center lg:mb-0 lg:mt-4 lg:w-full lg:max-w-6xl lg:place-content-start lg:text-left">
+        <slot />
+      </div>
+
+      <footer class="mt-auto text-gray-400">
+        <a
+          class="pointer-events-none flex place-items-center gap-2 p-8 text-sm lg:pointer-events-auto lg:p-0"
+          href="https://nadjitan.vercel.app"
+          target="_blank"
+          rel="noopener noreferrer">
+          By <b>Nadji Tan</b>
+        </a>
+      </footer>
+    </main>
+  </body>
+</html>
