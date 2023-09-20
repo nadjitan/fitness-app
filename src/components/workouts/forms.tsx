@@ -1,18 +1,19 @@
 import { useEffect, useRef } from "react"
 
-import {
-  Exercise,
-  exerciseSchema,
-  Workout,
-  workoutsAtom,
-  workoutSchema
-} from "@/store/workouts"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useStore } from "@nanostores/react"
 import { AnimatePresence, Reorder, useDragControls } from "framer-motion"
 import { Grip, ListRestart, MoveLeft, PlusCircle, Trash } from "lucide-react"
 import { useFieldArray, useForm, type UseFormReturn } from "react-hook-form"
 import { v4 as uuidv4 } from "uuid"
 
+import {
+  exerciseSchema,
+  workoutsAtom,
+  workoutSchema,
+  type Exercise,
+  type Workout
+} from "@/store/workouts"
 import { getLocalISODatetime } from "@/utils/dates"
 
 import { Button } from "@/components/ui/button"
@@ -111,8 +112,7 @@ const ExerciseItem: React.FC<{
 }
 
 export const CreateWorkoutForm: React.FC = () => {
-  const [workouts, setWorkouts] = useAtom(workoutsAtom)
-  const router = useRouter()
+  const workouts = useStore(workoutsAtom)
 
   const workoutForm = useForm<Workout>({
     resolver: zodResolver(workoutSchema),
@@ -144,8 +144,8 @@ export const CreateWorkoutForm: React.FC = () => {
   })
 
   function onSubmit(values: Workout) {
-    setWorkouts([...workouts, values])
-    router.replace("/")
+    workoutsAtom.set([...workouts, values])
+    location.replace("/")
   }
 
   return (
@@ -155,7 +155,7 @@ export const CreateWorkoutForm: React.FC = () => {
           <Button
             className="flex gap-2 md:text-lg"
             variant={"ghost"}
-            onClick={() => router.replace("/")}
+            onClick={() => location.replace("/")}
           >
             <MoveLeft /> Exit
           </Button>
@@ -394,9 +394,8 @@ export const CreateWorkoutForm: React.FC = () => {
 export const EditWorkoutForm: React.FC<{ workoutId: string }> = ({
   workoutId
 }) => {
-  const [workouts, setWorkouts] = useAtom(workoutsAtom)
+  const workouts = useStore(workoutsAtom)
   const workout = workouts.find((item) => item.id === workoutId)
-  const router = useRouter()
 
   const workoutForm = useForm<Workout>({
     resolver: zodResolver(workoutSchema),
@@ -420,13 +419,13 @@ export const EditWorkoutForm: React.FC<{ workoutId: string }> = ({
   })
 
   function onSubmit(values: Workout) {
-    setWorkouts(
+    workoutsAtom.set(
       workouts.map((w) => {
         if (w.id === values.id) return values
         return w
       })
     )
-    router.push(`/workout/${values.id}`)
+    location.replace(`/workout/${values.id}`)
   }
 
   return (
@@ -436,7 +435,7 @@ export const EditWorkoutForm: React.FC<{ workoutId: string }> = ({
           <Button
             className="flex gap-2 md:text-lg"
             variant={"ghost"}
-            onClick={() => router.back()}
+            onClick={() => history.back()}
           >
             <MoveLeft /> Back
           </Button>
@@ -495,8 +494,10 @@ export const EditWorkoutForm: React.FC<{ workoutId: string }> = ({
                   type="button"
                   variant="destructive"
                   onClick={() => {
-                    setWorkouts(workouts.filter((w) => w.id !== workout?.id))
-                    router.replace("/")
+                    workoutsAtom.set(
+                      workouts.filter((w) => w.id !== workout?.id)
+                    )
+                    location.replace("/")
                   }}
                 >
                   Delete

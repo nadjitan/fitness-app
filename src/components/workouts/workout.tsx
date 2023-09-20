@@ -144,10 +144,9 @@ const springTransition: Transition = {
   damping: 30
 }
 
-export default function Workout({ params }: { params: { id: string } }) {
-  const router = useRouter()
+export function Workout({ workoutId }: { workoutId: string }) {
   const workouts = useStore(workoutsAtom)
-  const workout = workouts.find((item) => item.id === params.id)
+  const workout = workouts.find((item) => item.id === workoutId)
   const [exercises] = useState(workout?.exercises!)
   const [exerciseIndex, setExerciseIndex] = useState(0)
   const [exercise, setExercise] = useState(exercises[exerciseIndex])
@@ -210,7 +209,7 @@ export default function Workout({ params }: { params: { id: string } }) {
             className="flex gap-2 md:text-lg"
             variant={"ghost"}
             disabled={running}
-            onClick={() => router.replace("/")}
+            onClick={() => location.replace("/")}
           >
             <MoveLeft /> Exit
           </Button>
@@ -271,9 +270,7 @@ export default function Workout({ params }: { params: { id: string } }) {
         <Button
           variant="ghost"
           className="absolute bottom-4 left-4 flex gap-2 md:text-lg"
-          onClick={() => {
-            router.push(`/edit-workout/${workout!.id}`)
-          }}
+          onClick={() => location.replace(`/edit-workout/${workout!.id}`)}
         >
           <FileEdit className="w-5 h-5" /> Edit
         </Button>
