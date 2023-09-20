@@ -152,13 +152,11 @@ export const CreateWorkoutForm: React.FC = () => {
     <>
       <section className="relative flex h-full flex-1 flex-col items-center gap-4 overflow-hidden rounded-lg border p-4">
         <div className="flex h-max w-full justify-between">
-          <Button
-            className="flex gap-2 md:text-lg"
-            variant={"ghost"}
-            onClick={() => location.replace("/")}
-          >
-            <MoveLeft /> Exit
-          </Button>
+          <a href="/">
+            <Button className="flex gap-2 md:text-lg" variant={"ghost"}>
+              <MoveLeft /> Exit
+            </Button>
+          </a>
 
           <Button
             className="flex gap-2 md:text-lg"
@@ -432,13 +430,11 @@ export const EditWorkoutForm: React.FC<{ workoutId: string }> = ({
     <>
       <section className="relative flex h-full flex-1 flex-col items-center gap-4 overflow-hidden rounded-lg border p-4">
         <div className="flex h-max w-full justify-between">
-          <Button
-            className="flex gap-2 md:text-lg"
-            variant={"ghost"}
-            onClick={() => history.back()}
-          >
-            <MoveLeft /> Back
-          </Button>
+          <a href={`/workout/${workoutId}`}>
+            <Button className="flex gap-2 md:text-lg" variant={"ghost"}>
+              <MoveLeft /> Back
+            </Button>
+          </a>
 
           <Button
             className="flex gap-2 md:text-lg"

@@ -1,13 +1,11 @@
 ---
-import { ViewTransitions } from "astro:transitions"
-
 import MainLayout from "@/layouts/MainLayout.astro"
 import { Dumbbell } from "lucide-react"
 
+import { NavMenu } from "@/components/nav-menu"
 import WorkoutList from "@/components/workouts/list"
 ---
 
-<ViewTransitions />
 <MainLayout title="Gym App">
   <nav
     class="fixed left-0 top-0 z-10 flex w-full max-w-6xl items-center justify-between border-b border-gray-300 p-4 text-sm animate-in fade-in dark:border-neutral-800 lg:static lg:flex"
@@ -16,7 +14,7 @@ import WorkoutList from "@/components/workouts/list"
       <Dumbbell strokeWidth={2.7} size={32} />
       <h1 class="text-3xl font-black tracking-widest">FITNESS</h1>
     </div>
-    <!-- <NavMenu /> -->
+    <NavMenu client:only="react" />
   </nav>
 
   <div

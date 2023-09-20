@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react"
+
 import { Menu, Moon, PlusCircle, Sun } from "lucide-react"
 
 import {
@@ -18,7 +20,17 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 export function AccordionTheme() {
-  const { setTheme, theme } = useTheme()
+  const [theme, setTheme] = useState(localStorage.getItem("theme") ?? "light")
+
+  useEffect(() => {
+    const shouldAddDarkClass =
+      (theme === "system" &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches) ||
+      theme === "dark"
+
+    document.documentElement.classList.toggle("dark", shouldAddDarkClass)
+    localStorage.setItem("theme", theme)
+  }, [theme])
 
   return (
     <Accordion type="single" collapsible className="w-full">
@@ -68,8 +80,6 @@ export function AccordionTheme() {
 }
 
 export function NavMenu() {
-  const router = useRouter()
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -81,13 +91,13 @@ export function NavMenu() {
         <DropdownMenuLabel>Menu</DropdownMenuLabel>
         <DropdownMenuGroup>
           <AccordionTheme />
-          <DropdownMenuItem
-            className="cursor-pointer py-2"
-            onClick={() => router.push("/create-workout")}
-          >
-            <PlusCircle className="mr-2 h-4 w-4" />
-            <span>Create Workout</span>
-          </DropdownMenuItem>
+          <a href="/create-workout">
+            <DropdownMenuItem className="cursor-pointer py-2">
+              <PlusCircle className="mr-2 h-4 w-4" />
+              <span>Create Workout</span>
+            </DropdownMenuItem>
+          </a>
+
           {/* <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               <UserPlus className="mr-2 h-4 w-4" />

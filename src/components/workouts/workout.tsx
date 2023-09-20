@@ -203,16 +203,17 @@ export function Workout({ workoutId }: { workoutId: string }) {
   return (
     <div className="flex h-full w-full flex-col gap-2 animate-in fade-in lg:max-w-6xl lg:flex-row">
       <title>{`${workout?.title} - ${exercise.name}`}</title>
-      <section className="relative flex h-full flex-1 flex-col items-center gap-4 overflow-hidden rounded-lg border p-4">
+      <section className="relative flex h-full flex-1 flex-col items-center gap-4 overflow-hidden rounded-lg md:border md:p-4">
         <div className="flex h-max w-full justify-between">
-          <Button
-            className="flex gap-2 md:text-lg"
-            variant={"ghost"}
-            disabled={running}
-            onClick={() => location.replace("/")}
-          >
-            <MoveLeft /> Exit
-          </Button>
+          <a href="/">
+            <Button
+              className="flex gap-2 md:text-lg"
+              variant={"ghost"}
+              disabled={running}
+            >
+              <MoveLeft /> Exit
+            </Button>
+          </a>
 
           <Button
             className="flex gap-2 md:text-lg"
@@ -267,15 +268,15 @@ export function Workout({ workoutId }: { workoutId: string }) {
           )}
         </AnimatePresence>
 
-        <Button
-          variant="ghost"
-          className="absolute bottom-4 left-4 flex gap-2 md:text-lg"
-          onClick={() => location.replace(`/edit-workout/${workout!.id}`)}
-        >
-          <FileEdit className="w-5 h-5" /> Edit
-        </Button>
+        <a href={`/workout/edit/${workout!.id}`}>
+          <Button
+            variant="ghost"
+            className="absolute bottom-4 left-0 md:left-4 flex gap-2 md:text-lg"
+          >
+            <FileEdit className="w-5 h-5" /> Edit
+          </Button>
+        </a>
       </section>
-
       <section className="relative flex h-full flex-1 flex-col gap-2 overflow-hidden">
         <div className="flex h-max gap-2">
           <Button

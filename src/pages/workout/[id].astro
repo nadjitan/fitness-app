@@ -1,14 +1,10 @@
 ---
-import { ViewTransitions } from "astro:transitions"
-
 import MainLayout from "@/layouts/MainLayout.astro"
 
 import { Workout } from "@/components/workouts/workout"
 
 const { id } = Astro.params
 ---
-
-<ViewTransitions />
 <MainLayout title="Workout">
   <Workout client:only="react" workoutId={id!} />
 </MainLayout>

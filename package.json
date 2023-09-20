@@ -1,5 +1,5 @@
 {
-  "name": "gym-app",
+  "name": "fitness-app",
   "type": "module",
   "version": "1.1.0",
   "scripts": {
@@ -12,6 +12,7 @@
   "dependencies": {
     "@astrojs/react": "^3.0.2",
     "@astrojs/tailwind": "^5.0.0",
+    "@astrojs/vercel": "^5.0.1",
     "@hookform/resolvers": "^3.3.1",
     "@nanostores/persistent": "^0.9.1",
     "@nanostores/react": "^0.7.1",
