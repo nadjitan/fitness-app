@@ -28,55 +28,12 @@ import useCountdown from "@/hooks/useCountdown"
 import { Button } from "@/components/ui/button"
 import { ListButton } from "@/components/ui/list-button"
 
+import { FormatTime, Link } from "./some-ui"
+
 interface SemicircleProgressBarProps {
   duration: number
   isRest: boolean
   progress: number
-}
-
-const FormatTime: React.FC<{
-  /** time in seconds */
-  totalSeconds: number
-}> = ({ totalSeconds }) => {
-  const hours = Math.floor(totalSeconds / 3600)
-  const minutes = Math.floor((totalSeconds % 3600) / 60)
-  const seconds = Math.floor(totalSeconds % 60)
-  const milliseconds = Math.floor((totalSeconds % 1) * 1000)
-
-  const Abbr: React.FC<{ text: string }> = ({ text }) => (
-    <span className="text-xs italic">{text}</span>
-  )
-
-  const formattedTime: JSX.Element[] = []
-  if (hours > 0)
-    formattedTime.push(
-      <span key="h" className="w-max">
-        {hours}
-        <Abbr text="h" />
-      </span>
-    )
-  if (minutes > 0)
-    formattedTime.push(
-      <span key="min" className="w-max">
-        {minutes}
-        <Abbr text="min" />
-      </span>
-    )
-  formattedTime.push(
-    <span key="sec" className="w-max">
-      {seconds}
-      <Abbr text="sec" />
-    </span>
-  )
-  if (milliseconds > 0)
-    formattedTime.push(
-      <span key="ms" className="w-max text-lg place-self-end">
-        {milliseconds}
-        <Abbr text="ms" />
-      </span>
-    )
-
-  return <>{formattedTime.map((time) => time)}</>
 }
 
 const SemicircleProgressBar: React.FC<SemicircleProgressBarProps> = ({
@@ -205,7 +162,7 @@ export const Workout: React.FC<{ workoutId: string }> = ({ workoutId }) => {
     <div className="flex h-full w-full flex-col gap-2 animate-in fade-in lg:max-w-6xl lg:flex-row">
       <section className="relative flex h-full flex-1 flex-col items-center gap-4 overflow-hidden rounded-lg md:border md:p-4">
         <div className="flex h-max w-full justify-between">
-          <a href="/">
+          <Link to="/" disabled={running}>
             <Button
               className="flex gap-2 md:text-lg"
               variant={"ghost"}
@@ -213,7 +170,7 @@ export const Workout: React.FC<{ workoutId: string }> = ({ workoutId }) => {
             >
               <MoveLeft /> Exit
             </Button>
-          </a>
+          </Link>
 
           <Button
             className="flex gap-2 md:text-lg"
