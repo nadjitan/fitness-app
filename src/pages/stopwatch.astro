@@ -1,0 +1,10 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro"
+
+import { Stopwatch } from "@/components/workouts/stopwatch"
+
+const { id } = Astro.params
+---
+<MainLayout title="Stopwatch">
+  <Stopwatch client:only="react" workoutId={id!} />
+</MainLayout>

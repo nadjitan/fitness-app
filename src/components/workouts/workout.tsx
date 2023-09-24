@@ -34,11 +34,14 @@ interface SemicircleProgressBarProps {
   progress: number
 }
 
-function formatTime(progress: number) {
-  const hours = Math.floor(progress / 3600)
-  const minutes = Math.floor((progress % 3600) / 60)
-  const seconds = Math.floor(progress % 60)
-  const milliseconds = Math.floor((progress % 1) * 1000)
+const FormatTime: React.FC<{
+  /** time in seconds */
+  totalSeconds: number
+}> = ({ totalSeconds }) => {
+  const hours = Math.floor(totalSeconds / 3600)
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+  const seconds = Math.floor(totalSeconds % 60)
+  const milliseconds = Math.floor((totalSeconds % 1) * 1000)
 
   const Abbr: React.FC<{ text: string }> = ({ text }) => (
     <span className="text-xs italic">{text}</span>
@@ -47,28 +50,27 @@ function formatTime(progress: number) {
   const formattedTime: JSX.Element[] = []
   if (hours > 0)
     formattedTime.push(
-      <span key="h">
+      <span key="h" className="w-max">
         {hours}
         <Abbr text="h" />
       </span>
     )
   if (minutes > 0)
     formattedTime.push(
-      <span key="min">
+      <span key="min" className="w-max">
         {minutes}
         <Abbr text="min" />
       </span>
     )
   formattedTime.push(
-    <span key="sec">
+    <span key="sec" className="w-max">
       {seconds}
       <Abbr text="sec" />
     </span>
   )
-
   if (milliseconds > 0)
     formattedTime.push(
-      <span key="ms">
+      <span key="ms" className="w-max text-lg place-self-end">
         {milliseconds}
         <Abbr text="ms" />
       </span>
@@ -144,7 +146,7 @@ const springTransition: Transition = {
   damping: 30
 }
 
-export function Workout({ workoutId }: { workoutId: string }) {
+export const Workout: React.FC<{ workoutId: string }> = ({ workoutId }) => {
   const workouts = useStore(workoutsAtom)
   const workout = workouts.find((item) => item.id === workoutId)
   const [exercises] = useState(workout?.exercises!)
@@ -176,7 +178,6 @@ export function Workout({ workoutId }: { workoutId: string }) {
     setExerciseIndex(nextIndex)
     setExercise(nextExercise)
     if (nextExercise.duration > 0) start()
-    console.log(nextIndex)
   }
 
   useEffect(() => {
@@ -202,7 +203,6 @@ export function Workout({ workoutId }: { workoutId: string }) {
 
   return (
     <div className="flex h-full w-full flex-col gap-2 animate-in fade-in lg:max-w-6xl lg:flex-row">
-      <title>{`${workout?.title} - ${exercise.name}`}</title>
       <section className="relative flex h-full flex-1 flex-col items-center gap-4 overflow-hidden rounded-lg md:border md:p-4">
         <div className="flex h-max w-full justify-between">
           <a href="/">
@@ -243,11 +243,11 @@ export function Workout({ workoutId }: { workoutId: string }) {
                   isRest={exercise.type === "rest"}
                   progress={timeRemaining}
                 />
-                <h2 className="absolute text-2xl w-52 gap-1 items-center justify-center flex -bottom-5 md:text-4xl md:bottom-0 left-1/2 -translate-x-1/2">
-                  {formatTime(timeRemaining)}
-                </h2>
+                <div className="absolute text-2xl w-52 gap-1 justify-evenly items-center flex -bottom-5 md:text-4xl md:bottom-0 left-1/2 -translate-x-1/2">
+                  <FormatTime totalSeconds={timeRemaining} />
+                </div>
               </motion.div>
-              <motion.h1 className="line-clamp-2 text-3xl font-semibold">
+              <motion.h1 className="line-clamp-2 text-xl md:text-3xl font-semibold">
                 {exercise.name}
               </motion.h1>
             </>
@@ -261,7 +261,7 @@ export function Workout({ workoutId }: { workoutId: string }) {
               >
                 {exercise.sets}x{exercise.repetitions}
               </motion.h2>
-              <motion.h1 className="line-clamp-2 text-3xl font-semibold">
+              <motion.h1 className="line-clamp-2 text-xl md:text-3xl font-semibold">
                 {exercise.name}
               </motion.h1>
             </>
@@ -271,7 +271,7 @@ export function Workout({ workoutId }: { workoutId: string }) {
         <a href={`/workout/edit/${workout!.id}`}>
           <Button
             variant="ghost"
-            className="absolute bottom-4 left-0 md:left-4 flex gap-2 md:text-lg"
+            className="absolute bottom-0 md:bottom-4 left-0 md:left-4 flex gap-2 md:text-lg"
           >
             <FileEdit className="w-5 h-5" /> Edit
           </Button>
@@ -308,7 +308,7 @@ export function Workout({ workoutId }: { workoutId: string }) {
               ) : (
                 <Play fill="currentColor" />
               )}
-              {!running && exerciseIndex <= 0
+              {!running && exerciseIndex === 0
                 ? "Start"
                 : !running && exerciseIndex > 0
                 ? "Continue"

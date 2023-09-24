@@ -150,7 +150,7 @@ export const CreateWorkoutForm: React.FC = () => {
 
   return (
     <>
-      <section className="relative flex h-full flex-1 flex-col items-center gap-4 overflow-hidden rounded-lg border p-4">
+      <section className="relative flex h-full flex-1 flex-col items-center gap-4 overflow-hidden rounded-lg md:border md:p-4">
         <div className="flex h-max w-full justify-between">
           <a href="/">
             <Button className="flex gap-2 md:text-lg" variant={"ghost"}>

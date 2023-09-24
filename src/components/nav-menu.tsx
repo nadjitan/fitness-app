@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { Menu, Moon, PlusCircle, Sun } from "lucide-react"
+import { Menu, Moon, PlusCircle, Sun, Timer } from "lucide-react"
 
 import {
   Accordion,
@@ -91,6 +91,12 @@ export function NavMenu() {
         <DropdownMenuLabel>Menu</DropdownMenuLabel>
         <DropdownMenuGroup>
           <AccordionTheme />
+          <a href="/stopwatch">
+            <DropdownMenuItem className="cursor-pointer py-2">
+              <Timer className="mr-2 h-4 w-4" />
+              <span>Stopwatch</span>
+            </DropdownMenuItem>
+          </a>
           <a href="/create-workout">
             <DropdownMenuItem className="cursor-pointer py-2">
               <PlusCircle className="mr-2 h-4 w-4" />
@@ -112,10 +118,9 @@ export function NavMenu() {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub> */}
-
           <DropdownMenuSeparator />
           <DropdownMenuLabel className="select-none text-center text-xs font-normal opacity-50">
-            app v 1.1.0
+            app v 1.2.0
           </DropdownMenuLabel>
         </DropdownMenuGroup>
       </DropdownMenuContent>

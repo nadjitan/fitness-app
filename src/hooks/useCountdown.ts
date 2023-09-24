@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from "react"
 
+/**
+ * 
+ * @param initialTime - time in seconds
+ * @returns 
+ */
 export default function useCountdown(initialTime: number) {
   const [running, setRunning] = useState(false)
   const [finished, setFinished] = useState(false)

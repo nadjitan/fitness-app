@@ -6,13 +6,13 @@ import { NavMenu } from "@/components/nav-menu"
 import WorkoutList from "@/components/workouts/list"
 ---
 
-<MainLayout title="Gym App">
+<MainLayout title="Fitness App">
   <nav
-    class="fixed left-0 top-0 z-10 flex w-full max-w-6xl items-center justify-between border-b border-gray-300 p-4 text-sm animate-in fade-in dark:border-neutral-800 lg:static lg:flex"
+    class="fixed left-0 top-0 z-10 flex h-16 w-full max-w-6xl items-center justify-between border-b border-gray-300 p-4 text-sm animate-in fade-in dark:border-neutral-800 md:h-20 lg:static lg:flex"
   >
     <div class="flex select-none items-center gap-3">
-      <Dumbbell strokeWidth={2.7} size={32} />
-      <h1 class="text-3xl font-black tracking-widest">FITNESS</h1>
+      <Dumbbell strokeWidth={2.7} className="w-6 h-6 md:w-8 md:h-8" />
+      <h1 class="text-xl font-black tracking-widest md:text-3xl">FITNESS</h1>
     </div>
     <NavMenu client:only="react" />
   </nav>

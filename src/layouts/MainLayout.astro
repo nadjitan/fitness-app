@@ -9,13 +9,10 @@ const { title } = Astro.props
 <script>
   function CheckTheme() {
     const storedTheme = localStorage.getItem("theme")
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches
     const theme =
       typeof localStorage !== "undefined" && storedTheme
         ? storedTheme
-        : prefersDark
+        : window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "dark"
         : "light"
 

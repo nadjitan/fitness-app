@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 
-export default function useTimer() {
+export default function useStopwatch() {
   const [running, setRunning] = useState(false)
   const [time, setTime] = useState(0)
   const startTimeRef = useRef<number>(0)
