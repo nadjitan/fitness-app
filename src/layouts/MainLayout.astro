@@ -7,18 +7,18 @@ const { title } = Astro.props
 ---
 
 <script>
+  // TODO: Opera browser forces dark mode so `system` option always defaults to 
+  //       `dark` but works in all browsers once reloaded
   function CheckTheme() {
     const storedTheme = localStorage.getItem("theme")
-    const theme =
+    const shouldAddDarkClass =
       typeof localStorage !== "undefined" && storedTheme
-        ? storedTheme
+        ? (storedTheme === "system" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches) ||
+          storedTheme === "dark"
         : window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light"
 
-    document.documentElement.classList.toggle("dark", theme !== "light")
-
-    window.localStorage.setItem("theme", theme)
+    document.documentElement.classList.toggle("dark", shouldAddDarkClass)
   }
 
   window.addEventListener("DOMContentLoaded", CheckTheme)
